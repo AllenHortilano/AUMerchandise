@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Canteen Admin Profile</title>
+    <link rel="stylesheet" href="profile.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="homescreen.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="content">
+            <div class="sidebar">
+                <div class="profile-picture">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h2 id="sidebar-name">Yam Binaday</h2>
+                <p id="sidebar-position">Canteen Manager</p>
+                
+                <ul class="sidebar-menu">
+                    <li class="active"><i class="fas fa-user"></i> My Profile</li>
+                    <li><i class="fas fa-utensils"></i> Menu Management</li>
+                    <li><i class="fas fa-shopping-cart"></i> Orders</li>
+                    <li><i class="fas fa-box"></i> Inventory</li>
+                    <li><i class="fas fa-chart-pie"></i> Reports</li>
+                    <li><i class="fas fa-users"></i> Staff Management</li>
+                    <li><i class="fas fa-cog"></i> Settings</li>
+                    <li><i class="fas fa-sign-out-alt"></i> Logout</li>
+                </ul>
+            </div>
+            
+            <div class="main-content">
+                <div class="section-title">
+                    <h2>Admin Profile</h2>
+                    <button id="edit-profile"><i class="fas fa-edit"></i> Edit Profile</button>
+                </div>
+                
+                <form id="profile-form" class="profile-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" class="form-control" value="Yam Binaday" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="id-no">ID Number</label>
+                        <input type="text" id="id-no" class="form-control" value="22-1234" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="position">Position</label>
+                        <input type="text" id="position" class="form-control" value="Canteen Manager" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="mobile">Mobile Number</label>
+                        <input type="text" id="mobile" class="form-control" value="+63 (930020213)" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" value="binday_yam@gmail.com" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" id="address" class="form-control" value="123 School Street, City, State, ZIP" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="join-date">Joining Date</label>
+                        <input type="text" id="join-date" class="form-control" value="01/15/2020" disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="access-level">Access Level</label>
+                        <input type="text" id="access-level" class="form-control" value="Administrator" disabled>
+                    </div>
+                    
+                    <div class="btn-group" id="action-buttons" style="display: none;">
+                        <button type="button" class="btn btn-secondary" id="cancel-edit">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="save-profile">Save Changes</button>
+                    </div>
+                </form>
+                
+                <div class="activity-log">
+                    <div class="section-title">
+                        <h3>Recent Activities</h3>
+                    </div>
+                    
+                    <div class="log-item">
+                        <div class="log-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="log-content">
+                            <h4>Updated Weekly Menu</h4>
+                            <p>Added new items to the lunch menu for next week</p>
+                        </div>
+                        <div class="log-time">Today, 10:30 AM</div>
+                    </div>
+                    
+                    <div class="log-item">
+                        <div class="log-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="log-content">
+                            <h4>Inventory Check</h4>
+                            <p>Performed monthly inventory check and updated stock levels</p>
+                        </div>
+                        <div class="log-time">Yesterday, 3:15 PM</div>
+                    </div>
+                    
+                    <div class="log-item">
+                        <div class="log-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="log-content">
+                            <h4>Added New Staff</h4>
+                            <p>Added Sarah Johnson as Assistant Cook to the team</p>
+                        </div>
+                        <div class="log-time">Mar 31, 2025, 11:20 AM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get references to elements
+            const editButton = document.getElementById('edit-profile');
+            const cancelButton = document.getElementById('cancel-edit');
+            const saveButton = document.getElementById('save-profile');
+            const actionButtons = document.getElementById('action-buttons');
+            const formInputs = document.querySelectorAll('#profile-form .form-control');
+            const sidebarName = document.getElementById('sidebar-name');
+            const sidebarPosition = document.getElementById('sidebar-position');
+            
+            // Store original values
+            const originalValues = {};
+            formInputs.forEach(input => {
+                originalValues[input.id] = input.value;
+            });
+            
+            // Toggle edit mode
+            editButton.addEventListener('click', function() {
+                // Enable form inputs except ID and Join Date
+                formInputs.forEach(input => {
+                    if (input.id !== 'id-no' && input.id !== 'join-date' && input.id !== 'access-level') {
+                        input.disabled = false;
+                    }
+                });
+                
+                // Show action buttons
+                actionButtons.style.display = 'flex';
+                // Hide edit button
+                editButton.style.display = 'none';
+            });
+            
+            // Cancel edit
+            cancelButton.addEventListener('click', function() {
+                // Restore original values
+                formInputs.forEach(input => {
+                    input.value = originalValues[input.id];
+                    input.disabled = true;
+                });
+                
+                // Hide action buttons
+                actionButtons.style.display = 'none';
+                // Show edit button
+                editButton.style.display = 'inline-block';
+            });
+            
+            // Save profile changes
+            saveButton.addEventListener('click', function() {
+                // Update original values
+                formInputs.forEach(input => {
+                    originalValues[input.id] = input.value;
+                    input.disabled = true;
+                });
+                
+                // Update sidebar info
+                sidebarName.textContent = document.getElementById('name').value;
+                sidebarPosition.textContent = document.getElementById('position').value;
+                
+                // Show success message
+                alert('Profile updated successfully!');
+                
+                // Hide action buttons
+                actionButtons.style.display = 'none';
+                // Show edit button
+                editButton.style.display = 'inline-block';
+                
+                // Add activity log entry
+                addActivityLog('Updated Profile Information', 'Made changes to personal profile details');
+            });
+            
+            // Function to add activity log
+            function addActivityLog(title, description) {
+                const activityLog = document.querySelector('.activity-log');
+                const logSection = activityLog.querySelector('.section-title').nextElementSibling;
+                
+                const now = new Date();
+                const timeString = `Today, ${now.getHours()}:${now.getMinutes() < 10 ? '0' + now.getMinutes() : now.getMinutes()} ${now.getHours() >= 12 ? 'PM' : 'AM'}`;
+                
+                const logItem = document.createElement('div');
+                logItem.className = 'log-item';
+                logItem.innerHTML = `
+                    <div class="log-icon">
+                        <i class="fas fa-user-edit"></i>
+                    </div>
+                    <div class="log-content">
+                        <h4>${title}</h4>
+                        <p>${description}</p>
+                    </div>
+                    <div class="log-time">${timeString}</div>
+                `;
+                
+                activityLog.insertBefore(logItem, logSection);
+            }
+            
+            // Menu item click
+            const menuItems = document.querySelectorAll('.sidebar-menu li');
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove active class from all items
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    // Add active class to clicked item
+                    this.classList.add('active');
+                    
+                    // If not My Profile, show a message
+                    if (this.textContent.trim() !== 'My Profile') {
+                        alert('This feature is not implemented in this demo.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
